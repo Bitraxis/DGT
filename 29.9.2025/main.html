@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
     </script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
     </script>
 </head>
+
 <body>
     <div class="content">
         <header id="zvacsa" class="content__header">
@@ -31,12 +31,37 @@
         </main>
     </div>
     <script type="text/python">
-        from browser import document
-        
-        def zmenVelkost(event):
-            e = document["zvacsa"]
-            
+        from browser import document, html
 
+        calc = html.TABLE()
+        calc <= html.TR(html.TH(html.DIV("0", id="result"), colspan=3) + html.TD("C", id="clear"))
+        lines = ["789/", "456*", "123-", "0.=+"]
+
+        calc <= (html.TR(html.TD(x) for x in line) for line in lines)
+
+        document <= calc
+
+        result = document["result"]
+
+        def action(event):
+            element = event.target
+            value = element.text
+            if value not in "=C":
+                if result.text in ["0", "error"]:
+                    result.text = value
+                else:
+                    result.text = result.text + value
+            elif value == "C":
+                result.text = "0"
+            elif value == "=":
+                try:
+                    result.text = eval(result.text)
+                except:
+                    result.text = "error"
+        
+        for button in document.select("td"):
+            button.bind("click", action)
     </script>
 </body>
+
 </html>
