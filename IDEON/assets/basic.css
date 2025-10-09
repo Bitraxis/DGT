@@ -200,6 +200,26 @@
 /* hide edit button specifically for the Settings blob */
 .interface > div#interface__settings .edit-btn { display: none !important; }
 
+/* hover message overlay (absolutely positioned so it doesn't reflow the blob) */
+.hover-message {
+	position: fixed; /* set by JS per-blob */
+	pointer-events: none;
+	background: rgba(0,0,0,0.06);
+	color: var(--color-surface, #fff);
+	padding: 6px 10px;
+	border-radius: 10px;
+	font-size: 0.9rem;
+	white-space: nowrap;
+	opacity: 0;
+	transform: translate(-50%, -4px) scale(0.98);
+	transition: opacity 160ms ease, transform 160ms ease;
+	z-index: 10000;
+}
+.hover-message.visible {
+	opacity: 1;
+	transform: translate(-50%, 0) scale(1.02);
+}
+
 /* save confirmation small bubble */
 .interface > div .save-confirmation {
 	position: absolute;

@@ -4,15 +4,56 @@
     --color-primary: #3BD6C6;
     --color-secondary: #DECBB7;
     --color-accent: #F7F0F5;
-    --color-text: #433633;
+    /* stronger default text color for better contrast */
+    --color-text: #222222;
+    /* keep original as a muted alternative */
+    --color-text-weak: #433633;
     --color-muted: #8F857D;
     --color-dark: #5C5552;
     --color-background: #F7F0F5;
     --color-surface: #FFFFFF;
     --color-border: #E0D6D1;
-    --shadow: 0 2px 8px rgba(67, 54, 51, 0.1);
+    --shadow: 0 2px 8px rgba(34, 34, 34, 0.08);
     --radius: 8px;
     --transition: 0.3s ease;
+}
+
+/* High-contrast utilities */
+:root {
+    --color-text-contrast: #111111;
+    --color-surface-contrast: #ffffff;
+}
+
+/* Dark mode: prefers-color-scheme and a manual .theme-dark class */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-primary: #2ECFC0;
+        --color-secondary: #BFAF9E;
+        --color-accent: #121213;
+        --color-text: #EDEDED;
+        --color-text-weak: #CFC6C2;
+        --color-muted: #9F9A96;
+        --color-dark: #FFFFFF;
+        --color-background: #0b0c0d;
+        --color-surface: #0f1112;
+        --color-border: #222427;
+        --shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
+}
+
+/* manual dark theme class that can be toggled on body */
+.theme-dark {
+    --color-primary: #2ECFC0;
+    --color-secondary: #BFAF9E;
+    --color-accent: #121213;
+    --color-text: #EDEDED;
+    --color-text-weak: #CFC6C2;
+    --color-muted: #9F9A96;
+    --color-dark: #FFFFFF;
+    --color-background: #0b0c0d;
+    --color-surface: #0f1112;
+    --color-border: #222427;
+    --shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 
 /* Base Styles */

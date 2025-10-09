@@ -1,2 +1,190 @@
 @import url("colorscheme.css");
 
+/* Simple layout for brainstorm notes */
+
+#notes-controls {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	gap:12px;
+	padding:12px;
+}
+.date-controls { display:flex; align-items:center; gap:8px; }
+.action-controls { display:flex; gap:8px; }
+
+.entries { display:flex; flex-direction:column; gap:12px; padding:12px; }
+.entry { background:var(--color-surface); border:1px solid var(--color-border); padding:12px; border-radius:8px; }
+.entry .entry-date { font-weight:700; margin-bottom:8px; }
+.entry .entry-body { color:var(--color-text); }
+.entry .entry-controls { margin-top:8px; display:flex; gap:8px; }
+
+/* small responsive tweaks */
+@media (max-width:800px) {
+	.notes-area { flex-direction:column; }
+}
+
+/* Header layout */
+.header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; border-bottom:1px solid var(--color-border); background:var(--color-surface); color:var(--color-text, #111); }
+.header-left, .header-center, .header-right { display:flex; align-items:center; }
+.header-center { flex:1; justify-content:center; }
+.header-left { justify-content:flex-start; }
+.header-right { justify-content:flex-end; }
+#header-right-btn { background:transparent; border:0; width:36px; height:36px; }
+
+.settings-cog {
+	background: transparent;
+	border: 0;
+	padding: 4px;
+	/* darker default color for better contrast */
+	color: #222; /* stronger than var(--color-text) to make the cog darker */
+	cursor: pointer;
+	width: 36px;
+	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	box-shadow: none;
+}
+.settings-cog svg {
+	width: 20px;
+	height: 20px;
+	display: block;
+	/* show Font Awesome filled icon by using currentColor fill */
+	fill: currentColor;
+	stroke: none;
+}
+
+/* Dark mode: make cog lighter so it remains visible on dark backgrounds */
+body.theme-dark .settings-cog {
+	color: #e6e6e6; /* light gray for dark background */
+}
+
+/* Slight emphasis on hover in both themes */
+body:not(.theme-dark) .settings-cog:hover { color: #111; }
+body.theme-dark .settings-cog:hover { color: #ffffff; }
+
+/* Style the interface settings control like the main page */
+#interface__settings,
+.interface > div#interface__settings {
+	background: transparent;
+	color: var(--color-dark);
+	animation: none;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	box-shadow: none;
+	border: none;
+	width: 64px;
+	height: 64px;
+	position: fixed;
+	left: 16px;
+	top: 16px;
+	z-index: 9998;
+	cursor: pointer;
+}
+
+#interface__settings svg,
+.interface > div#interface__settings svg { color: color-mix(in srgb, var(--color-dark) 72%, var(--color-secondary)); display:block; width:80%; height:80%; }
+.title { margin:0; font-size:1.1rem; text-transform:lowercase; letter-spacing:0.06em; color:var(--color-primary); }
+/* Rainbow chroma effect for header when user edits text */
+.title.chroma {
+	/* base gradient with multiple hues */
+	background: linear-gradient(90deg, #ff004c, #ff7300, #ffef00, #00c853, #00b0ff, #6200ea, #ff00c8);
+	background-size: 300% 300%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	color: transparent;
+	animation: chromaMove 3s linear infinite;
+}
+
+@keyframes chromaMove {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+#save-indicator { margin-left:12px; padding:6px 8px; border-radius:6px; font-size:0.85rem; color:var(--color-text); background:transparent; opacity:0; transform:translateY(-2px); transition:opacity 220ms ease, transform 220ms ease; }
+.save-indicator.visible { opacity:1; transform:translateY(0); background: color-mix(in srgb, var(--color-primary) 8%, transparent); box-shadow: 0 6px 14px rgba(0,0,0,0.06); }
+body.theme-dark .save-indicator.visible { background: color-mix(in srgb, var(--color-primary) 12%, rgba(255,255,255,0.02)); }
+#header-right-btn { background:transparent; border:0; width:36px; height:36px; }
+
+/* Full-width add next day button */
+.top-controls { padding:8px 12px; }
+.add-next-fullwidth { width:100%; display:flex; align-items:center; justify-content:center; gap:10px; border:0; background:transparent; padding:14px 16px; font-size:1rem; cursor:pointer; color:var(--color-text, #111); border-radius:6px; transition:background 160ms ease, transform 120ms ease; }
+.add-next-fullwidth svg { stroke:var(--color-primary); }
+.add-next-fullwidth .add-next-label{ color:var(--color-primary); font-weight:600; }
+.add-next-fullwidth:hover { background:linear-gradient(90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02)); transform:translateY(-2px); }
+
+/* Horizontal day list */
+.day-list-container { padding:10px 12px; overflow-x:auto; }
+.day-list { display:flex; gap:10px; align-items:center; }
+.day-card { min-width:120px; max-width:160px; padding:10px; background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); cursor:pointer; transform-origin:center top; transition:transform 200ms ease, box-shadow 160ms ease; }
+.day-card:hover { transform:translateY(-6px) scale(1.02); box-shadow:0 12px 24px rgba(0,0,0,0.12); }
+.day-card.new { animation:dayEnter 420ms cubic-bezier(.2,.9,.3,1); }
+.day-card .day-label { font-weight:700; font-size:0.95rem; color:var(--color-primary); }
+.day-card .day-preview { margin-top:8px; color:var(--color-text); font-size:0.85rem; max-height:3.6em; overflow:hidden; }
+
+.day-card.active { outline: 2px solid color-mix(in srgb, var(--color-primary) 36%, white); transform: translateY(-6px) scale(1.02); box-shadow:0 14px 30px rgba(0,0,0,0.14); }
+
+@keyframes dayEnter {
+	0% { transform: translateY(-20px) scale(.96); opacity:0; }
+	60% { transform: translateY(4px) scale(1.01); opacity:1; }
+	100% { transform: translateY(0) scale(1); opacity:1; }
+}
+
+/* Today's entry */
+.today-entry { padding:12px 16px; background:var(--color-surface); border-bottom:1px solid var(--color-border); }
+.today-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.today-date { margin:0; font-size:1rem; font-weight:700; }
+.delete-today { background:transparent; border:1px solid var(--color-border); padding:6px 10px; border-radius:6px; cursor:pointer; color:var(--color-text, #111); }
+.delete-today svg { stroke:var(--color-primary); }
+.today-body { margin-top:8px; }
+
+/* single-line typing that wraps and expands: use textarea styled as ruled paper */
+.today-input-wrapper { position:relative; }
+.today-input { width:100%; min-height:40px; max-height:600px; border:none; padding:12px 12px; border-radius:6px; font-size:16px; line-height:24px; overflow:auto; box-sizing:border-box; color:var(--color-text); caret-color:var(--color-text); background:var(--color-surface); position:relative; z-index:2; resize:vertical; }
+.today-input::placeholder { color:#8b8b8b; }
+.current-line.hidden { display:none; }
+
+/* current-line highlight that sits under the current text line */
+.current-line { position:absolute; left:12px; right:12px; height:24px; background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.03)); border-radius:4px; pointer-events:none; z-index:1; transform:translateY(0); transition:transform 120ms linear, background 120ms linear; }
+
+/* dark-mode variant */
+body.theme-dark .current-line { background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); }
+
+/* Make the surrounding main area feel like paper */
+.main { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(250,250,248,0.9)); }
+
+/* Dark-mode ruled paper variant */
+body.theme-dark .today-input {
+	color: var(--color-text);
+	background-color: var(--color-surface);
+}
+
+/* remove default focus outline but provide a subtle ring to indicate focus */
+.today-input:focus {
+	outline: none;
+	box-shadow: 0 0 0 4px rgba(56, 189, 172, 0.07); /* subtle ring using a teal-ish tone */
+}
+body.theme-dark .main { background: linear-gradient(180deg, rgba(10,10,12,0.6), rgba(8,8,10,0.7)); }
+
+.previous-entry { padding:12px 16px; }
+
+/* icon and button tweaks */
+.settings-cog:hover { background: rgba(0,0,0,0.04); }
+.delete-today { display:inline-flex; align-items:center; gap:6px; }
+
+.previous-entry[style*="display: none"] { display:none; }
+
+/* Theme toggle styles */
+#theme-toggle { background:transparent; border:0; padding:6px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:var(--color-text); }
+#theme-toggle:focus { outline:2px solid var(--color-primary); }
+#theme-toggle .icon-sun, #theme-toggle .icon-moon { display:block; }
+/* default: light (hide moon) */
+body:not(.theme-dark) #theme-toggle .icon-moon { display:none; }
+/* dark theme: show moon, hide sun */
+body.theme-dark #theme-toggle .icon-sun { display:none; }
+
+
+

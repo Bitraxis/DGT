@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Color test</title>
+    <title>Ideon - brianstorm</title>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
     </script>
@@ -12,4 +12,82 @@
     <link rel="stylesheet" href="assets/normalize.css">
     <link rel="stylesheet" href="assets/colorscheme.css">
     <link rel="stylesheet" href="assets/brainstorm.css">
-</head>
+    </head>
+<body>
+    <div class="container" id="mainwindow">
+        <header class="header" id="container__header">
+            <div class="header-left">
+                <button class="settings-cog" aria-label="Settings" title="Settings">
+                    <!-- Font Awesome style cog (scaled down) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"/></svg>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1 class="title">brainstorm</h1>
+            </div>
+            <div class="header-right">
+                <!-- theme toggle button: switches between light and dark modes -->
+                <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode" aria-pressed="false">
+                    <!-- sun (light) icon -->
+                    <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.9 4.9l1.4 1.4"></path><path d="M17.7 17.7l1.4 1.4"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M4.9 19.1l1.4-1.4"></path><path d="M17.7 6.3l1.4-1.4"></path></svg>
+                    <!-- moon (dark) icon -->
+                    <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <!-- small save indicator -->
+                <div id="save-indicator" class="save-indicator" aria-hidden="true">Saved</div>
+            </div>
+        </header>
+        <main class="main" id="container__main">
+
+            <!-- full-width next-day button -->
+            <div class="top-controls">
+                <button class="add-next-fullwidth" aria-label="Add next day">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                    <span class="add-next-label">Add next day</span>
+                </button>
+            </div>
+
+            <!-- Row of day cards (small) -->
+            <div class="day-list-container">
+                <div class="day-list" aria-hidden="false">
+                    <!-- cards inserted here by JS -->
+                </div>
+            </div>
+
+            <!-- Today's brainstorm block -->
+            <section class="today-entry">
+                <div class="today-header">
+                    <h2 class="today-date"> <!-- today's date will be injected by server or left as plain text -->
+                        <!-- Use JS or server-side to inject today's date if desired -->
+                        Today
+                    </h2>
+                    <button class="delete-today" aria-label="Delete today's entry" title="Delete today's entry">
+                        <!-- trash icon -->
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                    </button>
+                </div>
+                <div class="today-body">
+                    <!-- wrapper for textarea and current-line highlight -->
+                    <div class="today-input-wrapper">
+                        <div class="current-line" aria-hidden="true"></div>
+                        <!-- simple textarea editor (plain text) -->
+                        <textarea class="today-input" role="textbox" aria-multiline="true" spellcheck="true" placeholder="Type your brainstorm here..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Previous day placeholder -->
+            <section class="previous-entry">
+                <h3>Previous day</h3>
+                <div class="previous-body">
+                    <!-- previous day content (static placeholder) -->
+                </div>
+            </section>
+
+        </main>
+        <footer class="footer" id="container__footer">
+            <!-- footer intentionally left empty -->
+        </footer>
+    </div>
+    <script src="assets/brainstorm.js"></script>
+</body>

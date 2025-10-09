@@ -21,6 +21,21 @@
 	const COOKIE_NAME = 'ideon_blob_texts_v1';
 	const SEED_COOKIE = 'ideon_blob_seed_v1';
 
+	// playful hover messages to show on blob hover
+	const HOVER_MESSAGES = [
+		"yaay!",
+		"hiya! ^w^",
+		"this is so secwet uwu",
+		"i like ideon!",
+		"keep the ideas flowing",
+		"so much thoughts!",
+		"lately I've been thinking about boys. >w<",
+		"also play minecraft",
+		"do you like organizing thoughts?",
+		"am i weird? pls say no...",
+		"made by Bitraxis and some slight AI (don't kill me pls)"
+	];
+
 	// seeded RNG helpers (xmur3 + mulberry32)
 	function xmur3(str) {
 		for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
@@ -265,10 +280,90 @@
 				interface__whiteboard: 'whiteboard.html'
 			};
 
-			for (let i = 1; i < blobs.length; i++) {
+			for (let i = 0; i < blobs.length; i++) {
 			 const b = blobs[i];
 			 // mark non-center blobs clickable (settings will open a modal)
-			 b.classList.add('clickable');
+			 	 // leave clickable pointer for non-center items only
+			 	 if (i !== 0) b.classList.add('clickable');
+
+				// hover behavior: show a random playful message in a body-level overlay (avoids triggering MutationObserver)
+				if (!b.dataset.hoverAttached) {
+					b.addEventListener('mouseenter', function (ev) {
+						try {
+							// don't show while editing
+							if (b.getAttribute('contenteditable') === 'true') return;
+							// skip settings blob (keep settings label explicit)
+							if (b.id === 'interface__settings') return;
+							// avoid creating multiple overlays
+							if (document.body.querySelector('.hover-message[data-src="' + b.id + '"]')) return;
+							const span = document.createElement('div');
+							span.className = 'hover-message';
+							span.setAttribute('data-src', b.id || 'blob');
+							const idx = Math.floor(Math.random() * HOVER_MESSAGES.length);
+							span.textContent = HOVER_MESSAGES[idx];
+
+							function positionOverlay() {
+								const rect = b.getBoundingClientRect();
+								// prefer below the blob heading
+								const offsetY = 10; // px gap
+								let left = rect.left + rect.width / 2;
+								// compute desired top below the blob
+								let top = rect.bottom + offsetY;
+								// ensure span has been laid out to read its size
+								const sw = span.offsetWidth || 0;
+								const sh = span.offsetHeight || 0;
+								// if placing below would overflow viewport, try above
+								if (top + sh > window.innerHeight - 8) {
+									top = rect.top - offsetY - sh;
+								}
+								// clamp horizontally to viewport edges
+								const minLeft = 8 + sw / 2;
+								const maxLeft = window.innerWidth - 8 - sw / 2;
+								if (left < minLeft) left = minLeft;
+								if (left > maxLeft) left = maxLeft;
+								span.style.position = 'fixed';
+								span.style.left = left + 'px';
+								span.style.top = top + 'px';
+								span.style.transform = 'translate(-50%, 0)';
+							}
+
+							document.body.appendChild(span);
+							// ensure layout is ready then position and show
+							requestAnimationFrame(() => {
+								positionOverlay();
+								span.classList.add('visible');
+							});
+
+							// reposition on scroll/resize while visible
+							const reposition = function () { if (document.body.contains(span)) positionOverlay(); };
+							window.addEventListener('scroll', reposition, true);
+							window.addEventListener('resize', reposition);
+
+							// store cleanup handler so mouseleave can remove listeners
+							span._repositionHandler = reposition;
+						} catch (e) { /* ignore hover errors */ }
+					});
+
+					b.addEventListener('mouseleave', function (ev) {
+						try {
+							const existing = document.body.querySelector('.hover-message[data-src="' + b.id + '"]');
+							if (existing) {
+								existing.classList.remove('visible');
+								// allow transition before removal
+								setTimeout(() => {
+									try { 
+										if (existing._repositionHandler) {
+											window.removeEventListener('scroll', existing._repositionHandler, true);
+											window.removeEventListener('resize', existing._repositionHandler);
+										}
+										existing.remove();
+								} catch (e) {}
+							}, 180);
+						}
+						} catch (e) { /* ignore */ }
+					});
+					b.dataset.hoverAttached = '1';
+				}
 
 				// add an edit button if not present (but skip for Settings blob)
 				 if (b.id !== 'interface__settings' && !b.querySelector('.edit-btn')) {
