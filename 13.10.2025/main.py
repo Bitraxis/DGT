@@ -1,7 +1,7 @@
 from browser import document, html
 
 ulohy = [
-    {"title": "Dokončiť DÚ", "done": False, "priority": 1},
+    {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
 ]
 
 def list_tasks():
