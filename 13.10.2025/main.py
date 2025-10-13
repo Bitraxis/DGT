@@ -23,12 +23,12 @@ def list_tasks():
     
     my_div <= tab
 
-def priorita(ev):
     
 def add_task(ev):
     title = document["new_task"].value
+    priorita = document["priority"].value
     if title:
-        tasks.append({"title": title, "done": False, "priority": "nízka"})
+        tasks.append({"title": title, "done": False, "priority": priorita})
         document["new_task"].value = ""
         list_tasks()  
 
