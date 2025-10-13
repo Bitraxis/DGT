@@ -4,13 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamické zobrazenie úloh</title>
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <!-- Brython -->
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
     </script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
     </script>
+    <!-- Material 3 -->
+    <script type="importmap">
+        {
+            imports": {
+                "@material/web/": "https://esm.run/@material/web/"
+            }
+        }
+    </script>
+    <script type="module">
+        import '@material/web/all.js';
+        import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+    </script>
+    <!-- Main Python Script -->
+    <script type="text/python" src="main.py"></script>
 </head>
 <body onload="brython()">
     
