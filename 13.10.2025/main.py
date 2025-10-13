@@ -12,3 +12,5 @@ def list_tasks():
     tab = html.TABLE(Class="task-table")
     header = html.TR([html.TH("Úloha"), html.TH("Hotovo", html.TH("Priorita"))])
     tab <= header
+    
+    
