@@ -2,6 +2,8 @@ from browser import document, html
 
 ulohy = [
     {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
+    {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
+    {"title": "Vyniesť smetu", "done": False, "priority": "vysoká"},
 ]
 
 def list_tasks():
