@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,8 +19,16 @@
 </head>
 <body onload="brython()">
     <h2>Tabuľka</h2>
-    <div id="tasks">
+    <div id="tasks"></div>
+    
+    <input type="text" id="new_task" placeholder="Nová úloha">
+    <select name="priorita" id="add_slct">
+        <option value="">--Vyberte si možnosť prosím--</option>
+        <option value="nízka">Nízka</option>
+        <option value="stredná">Stredná</option>
+        <option value="vysoká">Vysoká</option>
+    </select>
+    <button id="add_btn">Pridať úlohu</button>
 
-    </div>
 </body>
 </html>

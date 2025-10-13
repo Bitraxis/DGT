@@ -1,7 +1,7 @@
 
 from browser import document, html
 
-ulohy = [
+tasks = [
     {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
     {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
     {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"},
@@ -14,7 +14,7 @@ def list_tasks():
     header = html.TR([html.TH("Úloha"), html.TH("Hotovo", html.TH("Priorita"))])
     tab <= header
     
-    for t in ulohy:
+    for t in tasks:
         row = html.TR()
         row <= html.TD(t["title"])
         row <= html.TD("OK" if t["done"] else "TDB")
@@ -22,5 +22,15 @@ def list_tasks():
         tab <= row
     
     my_div <= tab
+
+def priorita(ev):
     
+def add_task(ev):
+    title = document["new_task"].value
+    if title:
+        tasks.append({"title": title, "done": False, "priority": "nízka"})
+        document["new_task"].value = ""
+        list_tasks()  
+
+document["add_btn"].bind("click", add_task)
 list_tasks()
