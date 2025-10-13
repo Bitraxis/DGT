@@ -1,9 +1,10 @@
+
 from browser import document, html
 
 ulohy = [
     {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
     {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
-    {"title": "Vyniesť smetu", "done": False, "priority": "vysoká"},
+    {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"},
 ]
 
 def list_tasks():
@@ -13,4 +14,13 @@ def list_tasks():
     header = html.TR([html.TH("Úloha"), html.TH("Hotovo", html.TH("Priorita"))])
     tab <= header
     
+    for t in ulohy:
+        row = html.TR()
+        row <= html.TD(t["title"])
+        row <= html.TD("OK" if t["done"] else "TDB")
+        row <= html.TD(t["priority"])
+        tab <= row
     
+    my_div <= tab
+    
+list_tasks()
