@@ -1,5 +1,5 @@
 
-from browser import document, html
+from browser import document, html, window
 from browser.local_storage import storage
 
 tasks = [
@@ -12,7 +12,7 @@ def list_tasks():
     my_div = document["tasks"]
     my_div.clear()
     tab = html.TABLE(Class="task-table")
-    header = html.TR([html.TH("Úloha"), html.TH("Hotovo", html.TH("Priorita"))])
+    header = html.TR([html.TH("Úloha"), html.TH("Hotovo"), html.TH("Priorita"), html.TH("🚮")])
     tab <= header
     
     for t in tasks:
@@ -22,10 +22,21 @@ def list_tasks():
         toggle_btn.bind("click", toggle_done)
         row <= html.TD(toggle_btn)
         row <= html.TD(t["priority"])
+        remove_btn = html.BUTTON("🚮", Class="remove_btn")
+        remove_btn.bind("click", remove_task)
+        row <= html.TD(remove_btn)
         tab <= row
     
     my_div <= tab
 
+def remove_task(ev):
+    row = ev.currentTarget.parentElement.parentElement
+    title = ev.currentTarget.parentElement.parentElement.children[0].textContent
+    for t in tasks:
+        if t["title"] == title:
+            tasks.remove(t)
+    if window.confirm("Naozaj chcete odstrániť túto úlohu?"):
+        row.remove() 
 
 def toggle_done(ev):
     btn = ev.target
