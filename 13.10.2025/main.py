@@ -21,8 +21,6 @@ def list_tasks():
         toggle_btn = html.BUTTON("✓" if t["done"] else "✗")
         toggle_btn.bind("click", toggle_done)
         row <= html.TD(toggle_btn)
-        # row <= html.TD("✓" if t["done"] else "✗")
-        # row <= html.TD("OK" if t["done"] else "TDB")
         row <= html.TD(t["priority"])
         tab <= row
     
