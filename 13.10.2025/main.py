@@ -26,6 +26,7 @@ def list_tasks():
     
     my_div <= tab
 
+
 def toggle_done(ev):
     btn = ev.target
     row = btn.parentElement.parentElement
