@@ -1,5 +1,6 @@
 
 from browser import document, html
+from browser.local_storage import storage
 
 tasks = [
     {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},

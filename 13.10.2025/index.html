@@ -18,17 +18,18 @@
     <script type="text/python" src="main.py"></script>
 </head>
 <body onload="brython()">
-    <h2>Tabuľka</h2>
-    <div id="tasks"></div>
-    
-    <input type="text" id="new_task" placeholder="Nová úloha">
-    <select name="priorita" id="priority">
-        <option value="">--Vyberte si možnosť prosím--</option>
-        <option value="nízka">Nízka</option>
-        <option value="stredná">Stredná</option>
-        <option value="vysoká">Vysoká</option>
-    </select>
-    <button id="add_btn">Pridať úlohu</button>
-
+    <div class="zone" id="zone">
+        <h2>Tabuľka</h2>
+        <div id="tasks"></div>
+        
+        <input type="text" id="new_task" placeholder="Nová úloha">
+        <select name="priorita" id="priority">
+            <option value="">--Vyberte si možnosť prosím--</option>
+            <option value="nízka">Nízka</option>
+            <option value="stredná">Stredná</option>
+            <option value="vysoká">Vysoká</option>
+        </select>
+        <button id="add_btn">Pridať úlohu</button>
+    </div>
 </body>
 </html>
