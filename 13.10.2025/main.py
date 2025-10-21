@@ -14,11 +14,15 @@ def list_tasks():
     tab = html.TABLE(Class="task-table")
     header = html.TR([html.TH("Úloha"), html.TH("Hotovo"), html.TH("Priorita"), html.TH("🚮")])
     tab <= header
-    
     for t in tasks:
         row = html.TR()
         row <= html.TD(t["title"])
-        toggle_btn = html.BUTTON("✓" if t["done"] else "✗")
+        toggle_btn = html.BUTTON("✓" if t["done"] else "✗") 
+        # if t["done"]:
+        #     toggle_btn.style["background-color"] = "lightgreen"
+        # else:
+        #    toggle_btn.style["background-color"] = "lightcoral"
+        toggle_btn.style["background-color"] = "lightcoral" if not t["done"] else "lightgreen"  
         toggle_btn.bind("click", toggle_done)
         row <= html.TD(toggle_btn)
         row <= html.TD(t["priority"])
@@ -45,7 +49,6 @@ def toggle_done(ev):
     for t in tasks:
         if t["title"] == title:
             t["done"] = not t["done"]
-            break
     list_tasks()
     
 def add_task(ev):
