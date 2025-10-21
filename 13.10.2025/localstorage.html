@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamické zobrazenie úloh</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Brython -->
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
+    </script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
+    </script>
+    <script src="https://kit.fontawesome.com/f408771a83.js" crossorigin="anonymous"></script>
+</head>
+<body onload="brython()">
+    <button class="save" id="save">Uložiť</button>
+    <button class="load" id="load">Načítať</button>
+    <div id="output" class="output"></div>
+    <script type="text/python">
+        from browser import document, window
+        from browser.local_storage import storage
+        # import json
+        def data_save(ev):
+            storage["ulohy"] = "ahoj svet"
+            document["output"].text = "Uložené"
+        
+        def data_load(ev):
+            if "ulohy" in storage:
+                try :
+                    data = storage["ulohy"]
+                    document["output"].text = data
+                except Exception as e:
+                    document["output"].text = "Chyba pri načítaní"
+            else:
+                document["output"].text = "Nie sú uložené žiadne úlohy"
+        document["save"].bind("click", data_save)
+        document["load"].bind("click", data_load)
+    </script>
+</body>
