@@ -18,13 +18,25 @@
 <body onload="brython()">
     <button class="save" id="save">Uložiť</button>
     <button class="load" id="load">Načítať</button>
+    <button class="remove" id="remove">Odstrániť</button>
     <div id="output" class="output"></div>
     <script type="text/python">
         from browser import document, window
         from browser.local_storage import storage
-        # import json
+        import json
+        
+        def data_remove(ev):
+            del storage["ulohy"]
+            document["output"].text = "Odstránené"
+
         def data_save(ev):
-            storage["ulohy"] = "ahoj svet"
+            # storage["ulohy"] = "ahoj svet"
+            tasks = [
+                {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
+                {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
+                {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"}
+            ]
+            storage["ulohy"] = json.dumps(tasks)
             document["output"].text = "Uložené"
         
         def data_load(ev):
@@ -38,5 +50,6 @@
                 document["output"].text = "Nie sú uložené žiadne úlohy"
         document["save"].bind("click", data_save)
         document["load"].bind("click", data_load)
+        document["remove"].bind("click", data_remove)
     </script>
 </body>
