@@ -79,6 +79,14 @@ def add_task(ev):
         document["new_task"].value = ""
         list_tasks()  
         
+def bck_fn(ev):
+    if kluc + "old" in storage:
+        storage[kluc] = storage[kluc + "old"]
+        del storage[kluc + "old"]
+        global tasks
+        tasks = load(kluc)
+        list_tasks()
         
 document["add_btn"].bind("click", add_task)
+document["bck_btn"].bind("click", bck_fn)
 list_tasks()
