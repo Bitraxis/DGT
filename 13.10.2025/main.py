@@ -4,12 +4,16 @@ from browser.local_storage import storage
 import json
 
 kluc = "ulohy"
-klucold = "ulohy_done"
+
+def load(load_kluc):
+        try:
+            data = json.loads(storage[load_kluc])
+        except Exception as e:
+            data = []
+        return data
+    
 if kluc in storage:
-    try:
-        tasks = json.loads(storage[kluc])
-    except Exception as e:
-        tasks = []
+    tasks = load(kluc)
 else:
     tasks = [
         {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
@@ -49,6 +53,7 @@ def remove_task(ev):
     for t in tasks:
         if t["title"] == title:
             tasks.remove(t)
+            storage[kluc + "old"] = json.dumps(load(kluc))
             storage[kluc] = json.dumps(tasks)
     if window.confirm("Naozaj chcete odstrániť túto úlohu?"):
         row.remove() 
@@ -60,6 +65,7 @@ def toggle_done(ev):
     for t in tasks:
         if t["title"] == title:
             t["done"] = not t["done"]
+            storage[kluc + "old"] = json.dumps(load(kluc))
             storage[kluc] = json.dumps(tasks)
     list_tasks()
     
@@ -68,6 +74,7 @@ def add_task(ev):
     priorita = document["priority"].value
     if title:
         tasks.append({"title": title, "done": False, "priority": priorita})
+        storage[kluc + "old"] = json.dumps(load(kluc))
         storage[kluc] = json.dumps(tasks)
         document["new_task"].value = ""
         list_tasks()  
