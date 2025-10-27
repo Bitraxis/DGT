@@ -1,6 +1,7 @@
 
 from browser import document, html, window
 from browser.local_storage import storage
+import json
 
 tasks = [
     {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},

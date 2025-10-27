@@ -21,7 +21,7 @@
     <button class="remove" id="remove">Odstrániť</button>
     <div id="output" class="output"></div>
     <script type="text/python">
-        from browser import document, window
+        from browser import document, window, html
         from browser.local_storage import storage
         import json
         
@@ -42,7 +42,8 @@
         def data_load(ev):
             if "ulohy" in storage:
                 try :
-                    data = storage["ulohy"]
+                    # data = storage["ulohy"]
+                    data = json.loads(storage["ulohy"])
                     document["output"].text = data
                 except Exception as e:
                     document["output"].text = "Chyba pri načítaní"
