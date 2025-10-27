@@ -3,9 +3,11 @@ from browser import document, html, window
 from browser.local_storage import storage
 import json
 
-if "ulohy" in storage:
+kluc = "ulohy"
+klucold = "ulohy_done"
+if kluc in storage:
     try:
-        tasks = json.loads(storage["ulohy"])
+        tasks = json.loads(storage[kluc])
     except Exception as e:
         tasks = []
 else:
@@ -47,7 +49,7 @@ def remove_task(ev):
     for t in tasks:
         if t["title"] == title:
             tasks.remove(t)
-            storage["ulohy"] = json.dumps(tasks)
+            storage[kluc] = json.dumps(tasks)
     if window.confirm("Naozaj chcete odstrániť túto úlohu?"):
         row.remove() 
 
@@ -58,7 +60,7 @@ def toggle_done(ev):
     for t in tasks:
         if t["title"] == title:
             t["done"] = not t["done"]
-            storage["ulohy"] = json.dumps(tasks)
+            storage[kluc] = json.dumps(tasks)
     list_tasks()
     
 def add_task(ev):
@@ -66,7 +68,7 @@ def add_task(ev):
     priorita = document["priority"].value
     if title:
         tasks.append({"title": title, "done": False, "priority": priorita})
-        storage["ulohy"] = json.dumps(tasks)
+        storage[kluc] = json.dumps(tasks)
         document["new_task"].value = ""
         list_tasks()  
         
