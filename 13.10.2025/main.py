@@ -3,12 +3,19 @@ from browser import document, html, window
 from browser.local_storage import storage
 import json
 
-tasks = [
-    {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
-    {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
-    {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"},
-]
+if "ulohy" in storage:
+    try:
+        tasks = json.loads(storage["ulohy"])
+    except Exception as e:
+        tasks = []
+else:
+    tasks = [
+        {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
+        {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
+        {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"},
+    ]
 
+        
 def list_tasks():
     my_div = document["tasks"]
     my_div.clear()
@@ -40,6 +47,7 @@ def remove_task(ev):
     for t in tasks:
         if t["title"] == title:
             tasks.remove(t)
+            storage["ulohy"] = json.dumps(tasks)
     if window.confirm("Naozaj chcete odstrániť túto úlohu?"):
         row.remove() 
 
@@ -50,6 +58,7 @@ def toggle_done(ev):
     for t in tasks:
         if t["title"] == title:
             t["done"] = not t["done"]
+            storage["ulohy"] = json.dumps(tasks)
     list_tasks()
     
 def add_task(ev):
@@ -57,8 +66,10 @@ def add_task(ev):
     priorita = document["priority"].value
     if title:
         tasks.append({"title": title, "done": False, "priority": priorita})
+        storage["ulohy"] = json.dumps(tasks)
         document["new_task"].value = ""
         list_tasks()  
-
+        
+        
 document["add_btn"].bind("click", add_task)
 list_tasks()
