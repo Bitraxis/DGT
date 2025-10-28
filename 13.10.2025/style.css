@@ -1,6 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Nunito', sans-serif;
     margin: 20px;
+}
+.zone {
+    max-width: 1000px;
+    margin: auto;
+    padding: 10px;
+    border: 5px solid #000000;
+    border-radius: 5px;
 }
 
 .task-table {

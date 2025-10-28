@@ -25,10 +25,13 @@ else:
 def list_tasks():
     my_div = document["tasks"]
     my_div.clear()
+    filter_value = document["filter_priority"].value
     tab = html.TABLE(Class="task-table")
-    header = html.TR([html.TH("Úloha"), html.TH("Hotovo"), html.TH("Priorita"), html.TH("🚮")])
+    header = html.TR([html.TH("Úloha"), html.TH("Hotovo"), html.TH("Priorita"), html.TH("♻")])
     tab <= header
     for t in tasks:
+        if filter_value != "vsetko" and t["priority"] != filter_value:
+            continue
         row = html.TR()
         row <= html.TD(t["title"])
         toggle_btn = html.BUTTON("✓" if t["done"] else "✗") 
@@ -37,14 +40,24 @@ def list_tasks():
         # else:
         #    toggle_btn.style["background-color"] = "lightcoral"
         toggle_btn.style["background-color"] = "lightcoral" if not t["done"] else "lightgreen"  
+        toggle_btn.style["border-radius"] = "5px"
         toggle_btn.bind("click", toggle_done)
         row <= html.TD(toggle_btn)
         row <= html.TD(t["priority"])
-        remove_btn = html.BUTTON("🚮", Class="remove_btn")
+        remove_btn = html.BUTTON("♻", Class="remove_btn")
+        remove_btn.style["background-color"] = "lightblue"
+        remove_btn.style["border-radius"] = "5px"
         remove_btn.bind("click", remove_task)
         row <= html.TD(remove_btn)
         tab <= row
-    
+        if t["priority"] == "nízka":
+            color = "lightgreen"
+        elif t["priority"] == "stredná":
+            color = "khaki"
+        else:
+            color = "salmon"
+        row.style = {"background-color": color}
+
     my_div <= tab
 
 def remove_task(ev):
@@ -86,7 +99,12 @@ def bck_fn(ev):
         global tasks
         tasks = load(kluc)
         list_tasks()
-        
+    
+def updateOnChange(ev):
+    storage[kluc] = json.dumps(tasks)
+    list_tasks()
+    
+document["filter_priority"].bind("change", updateOnChange)
 document["add_btn"].bind("click", add_task)
 document["bck_btn"].bind("click", bck_fn)
 list_tasks()
