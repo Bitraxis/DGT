@@ -99,13 +99,31 @@ def bck_fn(ev):
         global tasks
         tasks = load(kluc)
         list_tasks()
-    
+        
+def dbl_bck_fn(ev):
+    global tasks
+    tasks = [
+        {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
+        {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
+        {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"}
+    ]
+    list_tasks()
+
 def updateOnChange(ev):
     storage[kluc] = json.dumps(tasks)
     list_tasks()
+
+def CMhandler(ev):
+    if ev.target.tagName == "INPUT":
+        return
+    ev.preventDefault()
     
+def resize_print(ev):
+    print(f"Width: {window.innerWidth}, Height: {window.innerHeight}")
+
 document["filter_priority"].bind("change", updateOnChange)
 document["add_btn"].bind("click", add_task)
 document["bck_btn"].bind("click", bck_fn)
+document["bck_btn"].bind("dblclick", dbl_bck_fn)
 document.bind("contextmenu", CMhandler)
 list_tasks()
