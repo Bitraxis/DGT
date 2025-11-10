@@ -107,4 +107,5 @@ def updateOnChange(ev):
 document["filter_priority"].bind("change", updateOnChange)
 document["add_btn"].bind("click", add_task)
 document["bck_btn"].bind("click", bck_fn)
+document.bind("contextmenu", CMhandler)
 list_tasks()
