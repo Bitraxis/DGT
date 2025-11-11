@@ -15,12 +15,12 @@ def load(load_kluc):
 if kluc in storage:
     tasks = load(kluc)
 else:
-    tasks = [
+    storage[kluc] = json.dumps([
         {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
         {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
-        {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"},
-    ]
-
+        {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"}
+    ])
+    tasks = load(kluc)
         
 def list_tasks():
     my_div = document["tasks"]
@@ -102,11 +102,12 @@ def bck_fn(ev):
         
 def dbl_bck_fn(ev):
     global tasks
-    tasks = [
+    storage[kluc] = json.dumps([
         {"title": "Dokončiť DÚ", "done": False, "priority": "nízka"},
         {"title": "Nakŕmiť otrokov", "done": True, "priority": "stredná"},
         {"title": "Vyniesť smeti", "done": False, "priority": "vysoká"}
-    ]
+    ])
+    tasks = load(kluc)
     list_tasks()
 
 def updateOnChange(ev):
@@ -119,11 +120,23 @@ def CMhandler(ev):
     ev.preventDefault()
     
 def resize_print(ev):
-    print(f"Width: {window.innerWidth}, Height: {window.innerHeight}")
+    print("Width: " + str(window.innerWidth) + ", Height: " + str(window.innerHeight))
 
+def new_on_Key(ev):
+    if ev.key == "Escape":
+        document["new_task"].value = ""
+    elif ev.key == "Enter":
+        ev.preventDefault()
+        document["add_btn"].dispatchEvent(window.Event.new("click"))
+        
+def new_on_Input(ev):
+    document["new_task_label"].textContent = f"Počet znakov: {len(document['new_task'].value)}"
+document["new_task"].bind("keydown", new_on_Key)
+document["new_task"].bind("input", new_on_Input)
 document["filter_priority"].bind("change", updateOnChange)
 document["add_btn"].bind("click", add_task)
 document["bck_btn"].bind("click", bck_fn)
 document["bck_btn"].bind("dblclick", dbl_bck_fn)
 document.bind("contextmenu", CMhandler)
+window.bind("resize", resize_print)
 list_tasks()
