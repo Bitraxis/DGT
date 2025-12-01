@@ -48,7 +48,7 @@ def render_products():
     root.clear()
     for p in products:
         row = html.DIV()
-        row <= html.SPAN(f"{p['name']} — {p['price']:.2f} € ")
+        row <= html.SPAN(f"{p['name']} - {p['price']:.2f} € ")
         btn = html.BUTTON('Pridať do košíka')
         btn.attrs['data-id'] = str(p['id'])
         btn.bind('click', add_to_cart)
@@ -61,7 +61,7 @@ def render_cart():
     total = 0.0
     for idx, item in enumerate(cart):
         row = html.DIV()
-        row <= html.SPAN(f"{item['name']} — {item['price']:.2f} € ")
+        row <= html.SPAN(f"{item['name']} - {item['price']:.2f} € ")
         rm = html.BUTTON('Odstrániť')
         rm.attrs['data-idx'] = str(idx)
         rm.bind('click', remove_from_cart)
