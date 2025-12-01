@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisla</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.0/brython.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.0/brython_stdlib.js"></script>
+</head>
+<body onload="brython()">
+    <div id="cisla">
+        <span id="number-display" style="font-size: 2em; font-weight: bold;">0</span>
+        <br>
+    </div>
+    
+    <script type="text/python">
+        from browser import document, html, timer
+        from random import randint as r
+
+
+        def cislo_o_1():
+            aktualne = int(document["number-display"].text)
+            aktualne += 1
+            document["number-display"].text = str(aktualne)
+        
+        delay_ms = r(1000, 5000)   
+        timer.set_timeout(cislo_o_1, delay_ms)
+    </script>
+</body>
+</html>

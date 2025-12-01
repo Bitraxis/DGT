@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.0/brython.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.0/brython_stdlib.js"></script>
+
+</head>
+<body onload="brython()">
+    <h1>Produkty</h1>
+
+    <div id="products"></div>
+
+    <h2>Košík</h2>
+    <div id="cart"></div>
+    <p><strong>Spolu:</strong> <span id="total">0.00 €</span></p>
+    <button id="clear-cart">Vyprázdniť košík</button>
+
+    <script type="text/python">
+from browser import document, html, window
+import json
+
+products = [
+    {'id': 1, 'name': 'Jablko', 'price': 0.50},
+    {'id': 2, 'name': 'Hruška', 'price': 0.75},
+    {'id': 3, 'name': 'Chlieb', 'price': 1.20},
+    {'id': 4, 'name': 'Mlieko', 'price': 0.99},
+]
+
+def load_cart():
+    raw = window.localStorage.getItem('cart')
+    if raw and raw != 'null':
+        try:
+            return json.loads(raw)
+        except Exception:
+            return []
+    return []
+
+def save_cart(cart):
+    window.localStorage.setItem('cart', json.dumps(cart))
+
+cart = load_cart()
+
+def render_products():
+    root = document['products']
+    root.clear()
+    for p in products:
+        row = html.DIV()
+        row <= html.SPAN(f"{p['name']} — {p['price']:.2f} € ")
+        btn = html.BUTTON('Pridať do košíka')
+        btn.attrs['data-id'] = str(p['id'])
+        btn.bind('click', add_to_cart)
+        row <= btn
+        root <= row
+
+def render_cart():
+    root = document['cart']
+    root.clear()
+    total = 0.0
+    for idx, item in enumerate(cart):
+        row = html.DIV()
+        row <= html.SPAN(f"{item['name']} — {item['price']:.2f} € ")
+        rm = html.BUTTON('Odstrániť')
+        rm.attrs['data-idx'] = str(idx)
+        rm.bind('click', remove_from_cart)
+        row <= rm
+        root <= row
+        total += float(item['price'])
+    document['total'].text = f"{total:.2f} €"
+
+def add_to_cart(ev):
+    pid = int(ev.target.attrs['data-id'])
+    p = next((x for x in products if x['id'] == pid), None)
+    if p is not None:
+        cart.append(p)
+        save_cart(cart)
+        render_cart()
+
+def remove_from_cart(ev):
+    idx = int(ev.target.attrs['data-idx'])
+    if 0 <= idx < len(cart):
+        cart.pop(idx)
+        save_cart(cart)
+        render_cart()
+
+def clear_cart(ev):
+    cart.clear()
+    save_cart(cart)
+    render_cart()
+
+document['clear-cart'].bind('click', clear_cart)
+
+render_products()
+render_cart()
+    </script>
+</body>
+</html>
