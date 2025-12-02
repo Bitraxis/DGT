@@ -7,11 +7,20 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.13.0/brython_stdlib.js"></script>
     <title>Document</title>
     <style>
-        div {
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 450px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        #krtkovia {
             display: grid;
             grid-template-columns: repeat(4, 100px);
             grid-template-rows: repeat(4, 100px);
             gap: 5px;
+            /* make the grid container width match the 4 columns + gaps */
+            width: calc(4 * 100px + 3 * 5px);
+            margin: 0 auto;
         }
         button {
             width: 100px;
@@ -23,27 +32,45 @@
             height: 100%;
             object-fit: cover;
         }
+        
+        #start {
+            display: block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            font-size: 1.1rem;
+            /* match the grid width and center */
+            width: calc(4 * 100px + 3 * 5px);
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
-    <div class="4x4" id="4x4">
-        <button id="1"><img src="mole.png"></button>
-        <button id="2"><img src="mole.png"></button>
-        <button id="3"><img src="mole.png"></button>
-        <button id="4"><img src="mole.png"></button>
-        <button id="5"><img src="mole.png"></button>
-        <button id="6"><img src="mole.png"></button>
-        <button id="7"><img src="mole.png"></button>
-        <button id="8"><img src="mole.png"></button>
-        <button id="9"><img src="mole.png"></button>
-        <button id="10"><img src="mole.png"></button>
-        <button id="11"><img src="mole.png"></button>
-        <button id="12"><img src="mole.png"></button>
-        <button id="13"><img src="mole.png"></button>
-        <button id="14"><img src="mole.png"></button>
-        <button id="15"><img src="mole.png"></button>
-        <button id="16"><img src="mole.png"></button>
+    <div id="krtkovia">
+        <button id="jedna"><img src="mole.png"></button>
+        <button id="dva"><img src="mole.png"></button>
+        <button id="tri"><img src="mole.png"></button>
+        <button id="styri"><img src="mole.png"></button>
+        <button id="pat"><img src="mole.png"></button>
+        <button id="sest"><img src="mole.png"></button>
+        <button id="sedem"><img src="mole.png"></button>
+        <button id="osem"><img src="mole.png"></button>
+        <button id="devat"><img src="mole.png"></button>
+        <button id="desat"><img src="mole.png"></button>
+        <button id="jedenast"><img src="mole.png"></button>
+        <button id="dvanast"><img src="mole.png"></button>
+        <button id="trinast"><img src="mole.png"></button>
+        <button id="strnast"><img src="mole.png"></button>
+        <button id="patnast"><img src="mole.png"></button>
+        <button id="sestnast"><img src="mole.png"></button>
     </div>
+
+    <button id="start">Start</button>
+
     
+    <script type="text/python">
+        
+    </script>
+
 </body>
 </html>
