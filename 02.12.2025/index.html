@@ -13,7 +13,7 @@
             margin: 2rem auto;
             padding: 1rem;
         }
-        #krtkovia {
+        #moles {
             display: grid;
             grid-template-columns: repeat(4, 100px);
             grid-template-rows: repeat(4, 100px);
@@ -46,30 +46,68 @@
     </style>
 </head>
 <body>
-    <div id="krtkovia">
-        <button id="jedna"><img src="mole.png"></button>
-        <button id="dva"><img src="mole.png"></button>
-        <button id="tri"><img src="mole.png"></button>
-        <button id="styri"><img src="mole.png"></button>
-        <button id="pat"><img src="mole.png"></button>
-        <button id="sest"><img src="mole.png"></button>
-        <button id="sedem"><img src="mole.png"></button>
-        <button id="osem"><img src="mole.png"></button>
-        <button id="devat"><img src="mole.png"></button>
-        <button id="desat"><img src="mole.png"></button>
-        <button id="jedenast"><img src="mole.png"></button>
-        <button id="dvanast"><img src="mole.png"></button>
-        <button id="trinast"><img src="mole.png"></button>
-        <button id="strnast"><img src="mole.png"></button>
-        <button id="patnast"><img src="mole.png"></button>
-        <button id="sestnast"><img src="mole.png"></button>
+    <div id="moles">
+        <button id="jedna" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="dva" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="tri" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="styri" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="pat" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="sest" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="sedem" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="osem" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="devat" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="desat" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="jedenast" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="dvanast" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="trinast" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="strnast" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="patnast" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
+        <button id="sestnast" title="mole"><img src="mole.png" alt="mole" title="mole"></button>
     </div>
 
-    <button id="start">Start</button>
+    <input type="button" id="start" value="Start Game">
 
     
     <script type="text/python">
+        from browser import document, html, timer
+        import time
+        import random
+        game_duration = 30
+        game_active = False
+        def rungame(ev):
+            global score, game_active
+            score = 0
+            game_active = True
+            document["start"].attrs["disabled"] = "disabled"
+            end_time = time.time() + game_duration
+            def show_mole():
+                if not game_active:
+                    return
+                for btn in document.select("button[title='mole']"):
+                    btn.style.visibility = "hidden"
+                mole_button = random.choice(document.select("button[title='mole']"))
+                mole_button.style.visibility = "visible"
+                timer.set_timeout(show_mole, 800)
+            def end_game():
+                global game_active
+                game_active = False
+                for btn in document.select("button[title='mole']"):
+                    btn.style.visibility = "hidden"
+                document["start"].attrs.pop("disabled", None)
+                alert = html.DIV(f"Game Over! Your score: {score}")
+                document <= alert
+            show_mole()
+            timer.set_timeout(end_game, game_duration * 1000)
+
         
+        document["start"].bind("click", rungame)
+
+
+
+
+
+        
+
     </script>
 
 </body>
