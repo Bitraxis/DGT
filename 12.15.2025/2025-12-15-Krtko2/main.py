@@ -9,6 +9,7 @@ score = 0                # počet bodov
 rounds = 0               # koľko kôl už prebehlo
 max_rounds = 20          # maximálny počet kôl
 timer_id = None          # id časovača, aby sme ho vedeli zastaviť
+            # rýchlosť v ms medzi krtkami
 
 # nastavíme max_rounds aj do HTML
 document["max_round"].text = str(max_rounds)
@@ -66,11 +67,12 @@ def tik():
 
 def start_game(ev):
     """Spustí hru."""
-    global score, rounds, timer_id
+    global score, rounds, timer_id, speed
 
     # reset skóre a kôl
     score = 0
     rounds = 0
+    speed = 2000
     document["score"].text = str(score)
     document["round"].text = str(rounds)
 
@@ -79,7 +81,7 @@ def start_game(ev):
 
     # TODO: nastav timer, ktorý každých 1000 ms zavolá tik
     # timer_id = timer.set_interval(tik, 1000)
-    timer_id = timer.set_interval(tik, random.randint(1000, 2000))
+    timer_id = timer.set_interval(tik, speed)
 
 def stop_game(ev):
     """Zastaví hru (ak beží)."""
@@ -108,6 +110,10 @@ def klik_na_pole(ev):
     #     document["score"].text = str(score)
     if btn.text == "X":
         score += 1
+        document["score"].text = str(score)
+
+    if btn.text == ".":
+        score -= 1
         document["score"].text = str(score)
     pass
 
