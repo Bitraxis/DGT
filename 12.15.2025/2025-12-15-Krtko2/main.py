@@ -21,6 +21,8 @@ def vycisti():
     #     btn.text = "."
     for btn in buttons:
         btn.text = "."
+        btn.class_name = ""
+    document["koniec"].text = ""
 
     pass
 
@@ -36,6 +38,7 @@ def zobraz_noveho():
     new_index = random.choice(diagonal_indices)
     current_index = new_index
     buttons[current_index].text = "X"
+    buttons[current_index].class_name = "krtko"
 
 
 def tik():
