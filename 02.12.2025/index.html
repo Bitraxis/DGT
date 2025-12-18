@@ -68,47 +68,7 @@
     <input type="button" id="start" value="Start Game">
 
     
-    <script type="text/python">
-        from browser import document, html, timer
-        import time
-        import random
-        game_duration = 30
-        game_active = False
-        def rungame(ev):
-            global score, game_active
-            score = 0
-            game_active = True
-            document["start"].attrs["disabled"] = "disabled"
-            end_time = time.time() + game_duration
-            def show_mole():
-                if not game_active:
-                    return
-                for btn in document.select("button[title='mole']"):
-                    btn.style.visibility = "hidden"
-                mole_button = random.choice(document.select("button[title='mole']"))
-                mole_button.style.visibility = "visible"
-                timer.set_timeout(show_mole, 800)
-            def end_game():
-                global game_active
-                game_active = False
-                for btn in document.select("button[title='mole']"):
-                    btn.style.visibility = "hidden"
-                document["start"].attrs.pop("disabled", None)
-                alert = html.DIV(f"Game Over! Your score: {score}")
-                document <= alert
-            show_mole()
-            timer.set_timeout(end_game, game_duration * 1000)
-
-        
-        document["start"].bind("click", rungame)
-
-
-
-
-
-        
-
-    </script>
+    <script type="text/python" src="main.py"></script>
 
 </body>
 </html>
