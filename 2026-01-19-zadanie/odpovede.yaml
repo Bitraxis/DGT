@@ -1,0 +1,8 @@
+name: Odpovede Nagy
+
+otazky:
+  - otazka: "Čo ukladáme do localStorage?"
+  - odpoved: "Tie dáta v tom našom zozname úloh. A preot abz sa uchovali po refreshi stránky."
+  - otazka: "Prečo to ukladáme ako JSON?"
+  - odpoved: "Lebo localStorage vie ukladať len stringy, a JSON nám umožňuje ukladať komplexnejšie dáta ako objekty alebo polia. Hlavne polia, kedže to je náš prípad."
+:
