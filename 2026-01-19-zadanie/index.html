@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Y2 – Zoznam (localStorage)</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython_stdlib.js"></script>
+
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 24px auto; padding: 0 12px; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input { padding: 8px; min-width: 220px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    #out { margin-top: 16px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+    .muted { color: #666; font-size: 0.95rem; }
+  </style>
+</head>
+<body onload="brython()">
+  <h1 id="title">Zoznam (prežije refresh)</h1>
+  <p class="muted">Cieľ: položky zostanú uložené aj po obnovení stránky.</p>
+
+  <div class="row">
+    <input id="inp_item" type="text" placeholder="napr. zopakovať render()" />
+    <button id="btn_add">Pridať</button>
+    <button id="btn_clear">Vymaž všetko</button>
+    <button id="btn_last">Zmaž posledné</button>
+  </div>
+
+  <div id="out"><em>Zoznam je prázdny.</em></div>
+
+  <script type="text/python" src="main.py"></script>
+</body>
+</html>
