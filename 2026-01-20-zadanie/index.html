@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DGT - 3F – Zoznam + téma</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython_stdlib.js"></script>
+
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 24px auto; padding: 0 12px; transition: background 200ms, color 200ms; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input { padding: 8px; min-width: 220px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    #out { margin-top: 16px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+    .muted { color: #666; font-size: 0.95rem; }
+    
+    /* TÉMA cez triedu na body */
+    body.light { background: #ffffff; color: #111; }
+    body.dark  { background: #111; color: #f2f2f2; }
+    body.dark #out { border-color: #444; }
+    body.dark .muted { color: #bbb; }
+  </style>
+</head>
+<body class="light" onload="brython()">
+  <h1 id="title">Zoznam + téma (prežije refresh)</h1>
+  <p class="muted">Cieľ: zoznam ostane uložený a vieš prepínať tému stránky (light/dark).</p>
+
+  <div class="row">
+    <button id="btn_theme">Prepnúť tému</button>
+    <span>Téma: <b id="theme_label">light</b></span>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <input id="inp_item" type="text" placeholder="napr. zopakovať render()" />
+    <button id="btn_add">Pridať</button>
+    <button id="btn_clear">Vymaž všetko</button>
+    <button id="btn_last">Zmaž posledné</button>
+  </div>
+
+  <div id="out"><em>Zoznam je prázdny.</em></div>
+
+  <script type="text/python" src="main.py"></script>
+</body>
+</html>
