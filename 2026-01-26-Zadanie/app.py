@@ -1,4 +1,6 @@
 from browser import document, html, window
+from browser.local_storage import storage
+import json
 
 # VERZIA: A
 # Hotovo: Hotovo prepína klávesou K (keď je položka vybraná).
@@ -27,15 +29,21 @@ def render():
         li = html.LI()
         li.attrs["data-id"] = str(it["id"])
 
-        # --- TODO: vyznačenie selected + done (class) ---
-        # tip: li.class_name = "..."
-        # ----------------------------------------------
-
+        # vyznačenie selected + done (class)
+        classes = []
+        if it["id"] == selected_id:
+            classes.append("selected")
+        if it["done"]:
+            classes.append("done")
+        li.class_name = " ".join(classes)
         # Text
         txt = html.SPAN(it["text"])
         txt.attrs["data-role"] = "text"
 
         # Ovládacie prvky
+        # btn_done ale pouzije md-outlined-button
+        # btn_done = <md-outlined-button>Hotovo</md-outlined-button>
+        
         btn_done = html.BUTTON("Hotovo")
         btn_done.attrs["data-role"] = "done"
 
@@ -61,12 +69,18 @@ def render_audit():
     document["audit"].text = " | ".join(audit) if audit else "—"
 
 def save():
-    """TODO (Hodina 2): ulož items do localStorage ako JSON."""
-    pass
+    """Ulož items do localStorage ako JSON."""
+    storage[STORAGE_KEY] = json.dumps(items)
 
 def load():
-    """TODO (Hodina 2): načítaj items z localStorage a nastav selected_id = None."""
-    pass
+    """Načítaj items z localStorage a nastav selected_id = None."""
+    global items, selected_id
+    data = storage.get(STORAGE_KEY)
+    if data:
+        items = json.loads(data)
+    else:
+        items = []
+    selected_id = None
 
 def add_item(text: str):
     global items, selected_id
@@ -77,10 +91,8 @@ def add_item(text: str):
     new_id = (max([x["id"] for x in items]) + 1) if items else 1
     obj = {"id": new_id, "text": text, "done": False}
 
-    # --- TODO: poradie pridania podľa verzie (navrch/naspodok) ---
-    # items.insert(0, obj) alebo items.append(obj)
-    # ------------------------------------------------------------
-
+    # Poradie: Nové položky idú NAVRCH
+    items.insert(0, obj)
     selected_id = new_id
     push_audit("+Pridané")
     render()
@@ -137,16 +149,23 @@ def on_list_click(ev):
     # vždy označ vybranú položku
     selected_id = item_id
 
-    # --- TODO: pravidlá podľa verzie ---
-    # 1) hotovo: podľa role ("done") alebo klik na text alebo dvojklik atď.
-    # 2) odstránenie: podľa role ("del") + pravidlo (Shift/Alt/Ctrl/dvojklik/confirm/selected)
-    # -----------------------------------
-
+    # Hotovo: podľa role ("done")
+    # Odstránenie: podľa role ("del") + stlačeným Shift
+    if role == "done":
+        toggle_done(item_id)
+    elif role == "del":
+        if ev.shiftKey:
+            delete_item(item_id)
     render()
 
 def on_keydown(ev):
-    """TODO: podľa verzie – hotovo cez klávesu (K/H/Space...) pre selected_id."""
-    pass
+    """Hotovo: Hotovo prepína klávesou K (keď je položka vybraná)."""
+    global selected_id
+    if selected_id is None:
+        return
+
+    if ev.key.lower() == "k":
+        toggle_done(selected_id)
 
 def wire_events():
     document["add_btn"].bind("click", on_add_click)
