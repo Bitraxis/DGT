@@ -30,7 +30,7 @@ def render():
         # --- TODO: vyznačenie selected + done (class) ---
         # tip: li.class_name = "..."
         # ----------------------------------------------
-
+        
         # Text
         txt = html.SPAN(it["text"])
         txt.attrs["data-role"] = "text"
