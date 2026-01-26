@@ -27,9 +27,14 @@ def render():
         li = html.LI()
         li.attrs["data-id"] = str(it["id"])
 
-        # --- TODO: vyznačenie selected + done (class) ---
-        # tip: li.class_name = "..."
-        # ----------------------------------------------
+        # Vyznačenie selected + done (class)
+        classes = []
+        if it["id"] == selected_id:
+            classes.append("selected")
+        if it["done"]:
+            classes.append("done")
+        if classes:
+            li.class_name = " ".join(classes)
         
         # Text
         txt = html.SPAN(it["text"])
