@@ -85,6 +85,12 @@ input[type="text"] {
 button { 
     padding: 8px 10px; 
     cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: transparent;
+}
+button:hover { 
+    background-color: #eee; 
 }
 ul { 
     padding-left: 18px; 
