@@ -4,13 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Y2 Miniapp – Verzia A</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="normalize.css" />
   <link rel="stylesheet" href="style.css" />
   <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython.min.js">
+          src="brython.min.js">
   </script>
   <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/brython@3.13.2/brython_stdlib.js">
+          src="brython_stdlib.js">
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,5 +54,17 @@
     </div>
   </main>
   <script type="text/python" src="app.py"></script>
+  <script src="sw.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  </script>
 </body>
 </html>
