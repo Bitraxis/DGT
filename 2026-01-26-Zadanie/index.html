@@ -15,34 +15,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
-  <script type="importmap">
-    {
-      "imports": {
-        "@material/web/": "https://esm.run/@material/web/"
-      }
-    }
-  </script>
-  <script type="module">
-    import '@material/web/all.js';
-    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
-
-    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-  </script>
 </head>
 <body onload="brython()">
   <main>
     <h2>Y2 Miniapp – Verzia A</h2>
 
     <div class="row">
-      <md-filled-text-field id="todo_in" type="text" placeholder="Napíš položku..." autocomplete="off"></md-filled-text-field>
-      <md-filled-button id="add_btn">Pridať</md-filled-button>
+      <input id="todo_in" type="text" placeholder="Napíš položku..." autocomplete="off"></input>
+      <button id="add_btn">Pridať</button>
       <span class="pill muted" id="counts">0 spolu • 0 hotové</span>
     </div>
 
     <div class="row" style="margin-top:10px;">
-      <md-text-button id="f_all">All</md-text-button>
-      <md-text-button id="f_active">Active</md-text-button>
-      <md-text-button id="f_done">Done</md-text-button>
+      <button id="f_all">All</button>
+      <button id="f_active">Active</button>
+      <button id="f_done">Done</button>
       <span class="pill muted">Filter: <b id="filter_lbl">All</b></span>
     </div>
 
@@ -55,16 +42,7 @@
   </main>
   <script type="text/python" src="app.py"></script>
   <script src="sw.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(registration => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
+  <script src="navigator.js">
   </script>
 </body>
 </html>

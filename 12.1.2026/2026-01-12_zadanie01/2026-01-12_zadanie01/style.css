@@ -1,0 +1,10 @@
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; line-height: 1.4; }
+.card { max-width: 720px; padding: 16px; border: 1px solid #ddd; border-radius: 14px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+input { padding: 10px 12px; border-radius: 10px; border: 1px solid #bbb; min-width: 220px; }
+button { padding: 10px 14px; border-radius: 10px; border: 1px solid #777; background: #f4f4f4; cursor: pointer; }
+#status { font-size: 0.95rem; opacity: 0.85; }
+#out { margin-top: 14px; font-size: 1.1rem; }
+.hint { margin-top: 10px; font-size: 0.95rem; opacity: 0.8; }
+code { background: #f3f3f3; padding: 1px 6px; border-radius: 6px; }
+

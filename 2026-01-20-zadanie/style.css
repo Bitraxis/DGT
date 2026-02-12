@@ -1,0 +1,11 @@
+body { font-family: system-ui, sans-serif; max-width: 720px; margin: 24px auto; padding: 0 12px; transition: background 200ms, color 200ms; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+input { padding: 8px; min-width: 220px; }
+button { padding: 8px 12px; cursor: pointer; }
+#out { margin-top: 16px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+.muted { color: #666; font-size: 0.95rem; }
+/* TÉMA cez triedu na body */
+body.light { background: #ffffff; color: #111; }
+body.dark  { background: #111; color: #f2f2f2; }
+body.dark #out { border-color: #444; }
+body.dark .muted { color: #bbb; }
