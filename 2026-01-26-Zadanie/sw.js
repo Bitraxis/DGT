@@ -4,7 +4,7 @@
 // DNEŠNÝ CIEĽ (1 hodina): aby fungovalo fetch rozhodovanie + offline fallback.
 // Budúci týždeň môžete dotiahnuť update flow (skipWaiting/clients.claim) podľa potreby.
 
-const CACHE_VERSION = "v1.0.0";            // keď meníš precache zoznam, zvýš verziu
+const CACHE_VERSION = "v2.0.0";            // keď meníš precache zoznam, zvýš verziu
 const STATIC_CACHE  = `static-${CACHE_VERSION}`;
 const OFFLINE_URL   = "./offline.html";
 
