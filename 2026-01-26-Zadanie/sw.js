@@ -20,8 +20,8 @@ const PRECACHE_ASSETS = [
   // Voliteľné (ak existujú v projekte):
   // "./icons/icon-192.png",
   // "./icons/icon-512.png",
-  // "./brython/brython.min.js",
-  // "./brython/brython_stdlib.js",
+  "./brython.min.js",
+  "./brython_stdlib.js",
 ];
 
 self.addEventListener("install", (event) => {
